@@ -17,7 +17,6 @@ from datetime import datetime
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 llm = ChatGroq(model_name="llama-3.3-70b-versatile")
 
@@ -110,7 +109,7 @@ def call_model(state: MessagesState):
 
 # print(response["messages"][-1].tool_calls)
 
-def router(state: MessagesState) -> Literal["tools", END]:
+def router(state: MessagesState) -> Literal["tools", END]:  # type: ignore
     messages = state['messages']
     last_message = messages[-1]
     # print(f"here is a last message from should continue {last_message}")
