@@ -8,11 +8,7 @@ import json
 from google_auth_oauthlib.flow import InstalledAppFlow
 from auth import register_user, login_user, update_twitter_credentials, process_email_credentials
 from ReadEmail import ReadEmail
-
-
-def chat_with_ai(message):
-    # Replace with actual AI logic/API call.
-    return f"AI Response to: {message}"
+from agent import Orion
 
 
 def logout():
@@ -108,7 +104,8 @@ def dashboard():
             "role": "user",
             "content": question
         })
-        response = chat_with_ai(question)
+        orion = Orion()
+        response = orion.chat(question)
         st.session_state["chat"].append({
             "role": "assistant",
             "content": response
