@@ -83,7 +83,8 @@ def dashboard():
         "Upload credentials.json for Email Access", type=["json"])
     if uploaded_credentials is not None:
         if st.sidebar.button("Generate Email Token"):
-            read = ReadEmail()
+            with open("credentials.json", "wb") as f:
+                f.write(uploaded_credentials.getbuffer())
             st.success("Email token generated and stored successfully!")
             # process_email_credentials(uploaded_credentials)
 
@@ -104,7 +105,6 @@ def dashboard():
             "role": "user",
             "content": question
         })
-        orion = Orion()
         response = orion.chat(question)
         st.session_state["chat"].append({
             "role": "assistant",
@@ -117,6 +117,8 @@ def dashboard():
 
 
 if __name__ == '__main__':
+    print("Starting Orion Personal Assistant")
+    orion = Orion()
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
     if 'username' not in st.session_state:
