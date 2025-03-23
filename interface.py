@@ -7,6 +7,7 @@ import pickle
 import json
 from google_auth_oauthlib.flow import InstalledAppFlow
 from auth import register_user, login_user, update_twitter_credentials, process_email_credentials
+from ReadEmail import ReadEmail
 
 
 def chat_with_ai(message):
@@ -86,7 +87,9 @@ def dashboard():
         "Upload credentials.json for Email Access", type=["json"])
     if uploaded_credentials is not None:
         if st.sidebar.button("Generate Email Token"):
-            process_email_credentials(uploaded_credentials)
+            read = ReadEmail()
+            st.success("Email token generated and stored successfully!")
+            # process_email_credentials(uploaded_credentials)
 
     st.sidebar.button("Logout", on_click=logout)
 
@@ -105,7 +108,7 @@ def dashboard():
             "role": "user",
             "content": question
         })
-        response = chat_with_ai(question)  # Replace with actual AI integration
+        response = chat_with_ai(question)
         st.session_state["chat"].append({
             "role": "assistant",
             "content": response
