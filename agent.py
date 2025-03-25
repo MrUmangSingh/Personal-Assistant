@@ -18,7 +18,7 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-llm = ChatGroq(model_name="deepseek-r1-distill-llama-70b")
+llm = ChatGroq(model_name="llama-3.3-70b-versatile")
 
 
 system_message = """You are Orion, a highly capable and friendly AI personal assistant. Your primary responsibilities include:  
@@ -112,7 +112,7 @@ def call_model(state: MessagesState):
 def router(state: MessagesState) -> Literal["tools", END]:  # type: ignore
     messages = state['messages']
     last_message = messages[-1]
-    # print(f"here is a last message from should continue {last_message}")
+    print(f"--------Last message--------- {last_message}")
     if last_message.tool_calls:
         return "tools"
     return END
@@ -148,9 +148,10 @@ class Orion:
         return response["messages"][-1].content
 
 
-orion = Orion()
-while True:
-    chat = input("YOU: ")
-    response = orion.chat(chat)
+if __name__ == '__main__':
+    orion = Orion()
+    while True:
+        chat = input("YOU: ")
+        response = orion.chat(chat)
 
-    print("ORION: " + response)
+        print("ORION: " + response)

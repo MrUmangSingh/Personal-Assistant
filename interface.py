@@ -117,7 +117,6 @@ def dashboard():
 
 
 if __name__ == '__main__':
-    print("Starting Orion Personal Assistant")
     orion = Orion()
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
